@@ -1,0 +1,45 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "16.8.6"
+    }
+  },
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "react",
+      "jsx-a11y"
+  ],
+  "rules": {
+    "handle-callback-err": ["off"],
+    "space-before-function-paren": ["off"],
+    "no-undef": ["off"],
+    "semi": ["off"],
+    "no-unused-vars": ["warn"],
+    "no-unused-expressions": ["warn"],
+    "semi-spacing": ["off"],
+    "no-unreachable": ["warn"],
+    "comma-dangle": ["off"],
+    "eol-last": ["off"]
+  }
+}
