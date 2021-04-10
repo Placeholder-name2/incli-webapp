@@ -1,6 +1,5 @@
 // Need aws credentials file in default directory to work
-
-var AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
 
 // Initialize the Amazon Cognito credentials provider
 AWS.config.region = 'eu-north-1'; // Region
@@ -10,12 +9,12 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
   // AccountId: '990232125707', // your AWS account ID
 });
 
-//AWS.config.update({ region: process.env.REGION });
+// AWS.config.update({ region: process.env.REGION });
 
-var ddb = new AWS.DynamoDB.DocumentClient(); //({ apiVersion: '2012-08-10' });
+const ddb = new AWS.DynamoDB.DocumentClient(); // ({ apiVersion: '2012-08-10' });
 
 async function getDatabaseItems(tableName) {
-  var params = {
+  const params = {
     TableName: tableName,
     Select: 'ALL_ATTRIBUTES',
   };
