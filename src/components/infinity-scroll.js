@@ -2,12 +2,14 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import getDatabaseItems from '../dynamodb/database';
 import TwitterCard from './service-rendering/twitter-card';
+import SpotifyCard from './service-rendering/spotify-card';
 
 class InfinityScroll extends React.Component {
   state = {
     items: Array.from({ length: 20 }),
-    databaseItems: null,
+    twitterItems: null,
     isLoaded: false,
+    spotifyItems: null,
   };
 
   fetchMoreData = () => {
@@ -22,19 +24,24 @@ class InfinityScroll extends React.Component {
 
   componentDidMount() {
     const fetchDBItems = async () => {
-      const databaseItems = await getDatabaseItems('twitter');
+      const spotifyItems = await getDatabaseItems('spotify').catch((error) => console.log(error));
+      const twitterItems = await getDatabaseItems('twitter').catch((error) => console.log(error));
       this.setState({
-        databaseItems,
+        twitterItems: twitterItems,
+        spotifyItems: spotifyItems,
       });
-      console.log('db items in state');
+      console.log('db items in state', twitterItems);
     };
-    fetchDBItems();
+    fetchDBItems().catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
-    if (this.state.databaseItems) {
+    if (this.state.twitterItems && this.state.spotifyItems) {
       return (
         <div>
+          {console.log(this.state.spotifyItems, 'spot')}
           <h1>Trending is coming</h1>
           <hr />
           <InfiniteScroll
@@ -44,11 +51,19 @@ class InfinityScroll extends React.Component {
             loader={<h4>Loading...</h4>}
           >
             {this.state.items.map((i, index) => (
-              <TwitterCard
-              key={index}
-              hashtag={this.state.databaseItems.Items[index].trending_hashtag}
-              tweetid={this.state.databaseItems.Items[index].tweet_id}
-              ></TwitterCard>
+              <div key={index}>
+                {console.log(index)}
+                <TwitterCard
+                  key={index + 100}
+                  hashtag={this.state.twitterItems.Items[index].trending_hashtag}
+                  tweetid={this.state.twitterItems.Items[index].tweet_id}
+                ></TwitterCard>
+                <SpotifyCard
+                  key={index + 200}
+                  url={this.state.spotifyItems.Items[index].url}
+                  playlistName={this.state.spotifyItems.Items[index].playlist_name}
+                ></SpotifyCard>
+              </div>
             ))}
           </InfiniteScroll>
         </div>

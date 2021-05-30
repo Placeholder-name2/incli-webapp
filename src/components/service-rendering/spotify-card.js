@@ -1,21 +1,26 @@
 import Card from 'react-bootstrap/Card';
 import React from 'react';
 
-export default class SpotifyCard extends React.Component {
-  render() {
-    return (
-      <Card>
-        <div>Trending right now on Spotify: {this.spotifyData.playlistName}</div>
-        <iframe
-          title="spotify-test"
-          src={this.spotifyData.Url}
-          width="300"
-          height="380"
-          frameBorder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-        ></iframe>
-      </Card>
-    );
-  }
+function SpotifyCard(item) {
+  return (
+    <Card>
+      <Card.Body className="d-flex justify-content-center">
+        <Card.Title style={{ color: 'black' }} className="d-flex justify-content-center"></Card.Title>
+        <ul>
+          <div>Trending right now on Spotify: {item.playlistName}</div>
+          <iframe
+            title="spotify-test"
+            src={item.url}
+            width="300"
+            height="380"
+            frameBorder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+          ></iframe>
+        </ul>
+      </Card.Body>
+    </Card>
+  );
 }
+
+export default SpotifyCard;
